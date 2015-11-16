@@ -1,0 +1,34 @@
+视频输出切换控制 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+2006 luming.yu@intel.com
+sysfs输出设备驱动系统提供一个视频输出的抽象目录层次结构，用于捕获平台的各项操作从而通过普通的sysfe接口来启用/禁用视频输出设备。例如：在我的IBM Thinkpad T42笔记本电脑上，ACPI的视频驱动程序用sysfs的输出类注册其输出设备和读/写状态。在系统sysfs下的用户接口树状层次结构为：
+linux:/sys/class/video_output # tree
+|-- CRT0|   |-- device -> ../../../devices/pci0000:00/0000:00:01.0
+|   |-- state
+|   |-- subsystem -> ../../../class/video_output
+|   `-- uevent
+
+|-- DVI0
+|   |-- device -> ../../../devices/pci0000:00/0000:00:01.0
+|   |-- state
+|   |-- subsystem -> ../../../class/video_output
+|   `-- uevent
+
+|-- LCD0
+|   |-- device -> ../../../devices/pci0000:00/0000:00:01.0
+|   |-- state
+|   |-- subsystem -> ../../../class/video_output
+|   `-- uevent
+`-- 
+TV0
+   |-- device -> ../../../devices/pci0000:00/0000:00:01.0
+   |-- state
+   |-- subsystem -> ../../../class/video_output
+   `-- uevent
+
+Block目录：包含所有的块设备
+Devices目录：包含系统所有的设备，并根据设备挂接的总线类型组织成层次结构
+Bus目录：包含系统中所有的总线类型
+Drivers目录：包括内核中所有已注册的设备驱动程序
+Class目录：系统中的设备类型（如网卡设备，声卡设备等） 
+sys下面的目录和文件反映了整台机器的系统状况。
+
