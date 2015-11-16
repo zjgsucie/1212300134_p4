@@ -1,0 +1,7 @@
+2.6.3版本后的调试模块
+在几乎所有linux的发行版本中，核心加载不存在的模块，如“net-pf-10”或其他，使用“modprobe -q”加载模块成功的情况容易破坏一些设置，并且我们也想知道如果加载失败是不是fs/char_dev.c中备用代码的一些原来就有的错误导致的，例如：在过去的调试信息，都是程序员的调试日志。现在这些调试消息已被取消。正确的调试模块问题的方法是：
+echo '#! /bin/sh' > /tmp/modprobe
+echo 'echo "$@" >> /tmp/modprobe.log' >> /tmp/modprobe
+echo 'exec /sbin/modprobe "$@"' >> /tmp/modprobe chmod a+x /tmp/modprobe
+echo /tmp/modprobe > /proc/sys/kernel/modprobe
+请注意，以上仅适用于*kernel*模式下请求加载模块，如果是在用户模式下加载模块尤其是使用“modprobe”加载，则不会有任何效果。
